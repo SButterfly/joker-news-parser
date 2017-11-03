@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 /**
  * @author s-ermakov
  */
-public class Nplus1 extends BaseParser {
+public class FontankaParser extends BaseParser {
 
     @Override
     public String parseHeader(Document document) {
-        Element headerElement = document.select("header.hero").first();
+        Element headerElement = document.select("h1.article_title").first();
         return headerElement == null ? "" : headerElement.text();
     }
 
     @Override
     public List<String> parseParagraphs(Document document) {
-        Element body = document.select("div.body").first();
+        Element body = document.select("div.article_fulltext").first();
         if (body == null) {
             return Collections.emptyList();
         }

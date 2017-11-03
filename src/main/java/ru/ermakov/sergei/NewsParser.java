@@ -1,10 +1,11 @@
 package ru.ermakov.sergei;
 
 import org.jsoup.Jsoup;
+import ru.ermakov.sergei.parsers.FontankaParser;
 import ru.ermakov.sergei.parsers.JugParser;
 import ru.ermakov.sergei.parsers.KomersantParser;
 import ru.ermakov.sergei.parsers.MedizaParser;
-import ru.ermakov.sergei.parsers.Nplus1;
+import ru.ermakov.sergei.parsers.Nplus1Parser;
 import ru.ermakov.sergei.parsers.Parser;
 
 import java.util.Collections;
@@ -30,7 +31,10 @@ public class NewsParser {
             return new JugParser();
         }
         if (url.contains("nplus1")) {
-            return new Nplus1();
+            return new Nplus1Parser();
+        }
+        if (url.contains("fontanka")) {
+            return new FontankaParser();
         }
         return htmlPage1 -> new NewsPage(Collections.singletonList(Jsoup.parse(htmlPage1.getContent()).text()));
     }
