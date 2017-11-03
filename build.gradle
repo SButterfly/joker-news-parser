@@ -11,7 +11,7 @@ repositories {
 }
 
 mainClassName = "ru.ermakov.sergei.Main"
-applicationDefaultJvmArgs = ["-Dnews.urls.file=", findProperty('news.urls.file') ?: '' ]
+applicationDefaultJvmArgs = ["-Dnews.urls.file=" + findProperty('news.urls.file') ?: '']
 
 dependencies {
     compile 'com.google.guava:guava:23.3-jre'
