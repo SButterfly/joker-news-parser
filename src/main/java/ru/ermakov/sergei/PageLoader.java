@@ -16,7 +16,7 @@ public class PageLoader {
         try {
             return new HtmlPage(urlStr, Jsoup.connect(urlStr).get().html());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to load" + urlStr, e);
         }
     }
 }

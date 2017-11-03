@@ -1,6 +1,7 @@
 package ru.ermakov.sergei;
 
 import org.jsoup.Jsoup;
+import ru.ermakov.sergei.parsers.JugParser;
 import ru.ermakov.sergei.parsers.KomersantParser;
 import ru.ermakov.sergei.parsers.MedizaParser;
 import ru.ermakov.sergei.parsers.Parser;
@@ -23,6 +24,9 @@ public class NewsParser {
         }
         if (url.contains("kommersant")) {
             return new KomersantParser();
+        }
+        if (url.contains("jug")) {
+            return new JugParser();
         }
         return htmlPage1 -> new NewsPage(Collections.singletonList(Jsoup.parse(htmlPage1.getContent()).text()));
     }
