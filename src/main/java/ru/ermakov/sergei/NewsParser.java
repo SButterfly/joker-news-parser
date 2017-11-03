@@ -1,10 +1,11 @@
 package ru.ermakov.sergei;
 
 import org.jsoup.Jsoup;
+import ru.ermakov.sergei.parsers.KomersantParser;
 import ru.ermakov.sergei.parsers.MedizaParser;
 import ru.ermakov.sergei.parsers.Parser;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author s-ermakov
@@ -16,10 +17,14 @@ public class NewsParser {
     }
 
     public Parser getParser(HtmlPage htmlPage) {
-        if (htmlPage.getUrl().contains("meduza")) {
+        String url = htmlPage.getUrl();
+        if (url.contains("meduza")) {
             return new MedizaParser();
         }
-        return htmlPage1 -> new NewsPage(Arrays.asList(Jsoup.parse(htmlPage1.getContent()).text()));
+        if (url.contains("kommersant")) {
+            return new KomersantParser();
+        }
+        return htmlPage1 -> new NewsPage(Collections.singletonList(Jsoup.parse(htmlPage1.getContent()).text()));
     }
 
 }

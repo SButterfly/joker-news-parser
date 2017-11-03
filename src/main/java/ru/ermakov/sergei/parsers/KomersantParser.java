@@ -11,31 +11,22 @@ import java.util.stream.Collectors;
 /**
  * @author s-ermakov
  */
-public class MedizaParser extends BaseParser {
+public class KomersantParser extends BaseParser {
 
     @Override
-    public String parseHeader(Document document) {
-        Element headerElement = document.select("span.NewsMaterialHeader-first").first();
+    protected String parseHeader(Document document) {
+        Element headerElement = document.select("h2.article_name").first();
         return headerElement == null ? "" : headerElement.text();
     }
 
     @Override
-    public List<String> parseParagraphs(Document document) {
-        Element dangerousHtml = document.select("div.DangerousHTML").first();
-        if (dangerousHtml == null) {
-            return Collections.emptyList();
-        }
-
-        Element body = dangerousHtml.select("div.Body").first();
+    protected List<String> parseParagraphs(Document document) {
+        Element body = document.select("div.article_text_wrapper").first();
         if (body == null) {
             return Collections.emptyList();
         }
-
         List<String> paragraphs = body
                 .children().stream()
-                .filter(element -> !element.attr("class").equals("EmbedCode"))
-                .flatMap(element -> element.getAllElements().stream())
-                .filter(element -> element.children().isEmpty())
                 .map(element -> element.text())
                 .filter(paragraph -> !Strings.isNullOrEmpty(paragraph))
                 .collect(Collectors.toList());
